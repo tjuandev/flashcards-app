@@ -8,14 +8,7 @@ export default defineConfig({
 		coverage: {
 			provider: 'istanbul',
 			reporter: ['text', 'json', 'html'],
-			exclude: [
-				'node_modules',
-				'dist',
-				'**/*.model.ts',
-				'**/model.ts',
-				'**/models/**',
-				'src/api/routes.ts'
-			]
+			exclude: ['node_modules', 'dist', '**/*.model.ts', 'src/api/routes.ts']
 		}
 	}
 })
