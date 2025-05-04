@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import itemRouter from './item/item.router.ts'
+import deckRouter from './deck/deck.router.ts'
 
 const router = Router()
 
-router.use('/item', itemRouter)
+router.use('/deck', deckRouter)
 
 export default router
