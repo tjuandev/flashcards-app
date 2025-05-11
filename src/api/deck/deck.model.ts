@@ -1,6 +1,16 @@
 import type { z } from 'zod'
-import type { DeckSchema } from './deck.validator.ts'
+import { pool } from '#src/config/db.ts'
+import { CreateDeckSchema, type DeckSchema } from './deck.validator.ts'
 
-export type Deck = z.infer<typeof DeckSchema>
+type DeckType = z.infer<typeof DeckSchema>
 
-export const decks: Deck[] = []
+export class Deck {
+	async create(name: DeckType['name']) {
+		CreateDeckSchema.parse({ name })
+		return await pool.query('INSERT INTO decks(name) VALUES($1)', [name])
+	}
+
+	async findAll() {
+		return await pool.query('SELECT * FROM decks')
+	}
+}

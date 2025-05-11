@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from 'express'
-import { pool } from '#src/config/db.ts'
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './deck.constants.ts'
-import { CreateDeckSchema } from './deck.validator.ts'
+import { Deck } from './deck.model.ts'
 
 export const createDeck = async (
 	req: Request,
@@ -9,8 +8,8 @@ export const createDeck = async (
 	next: NextFunction
 ) => {
 	try {
-		const { name } = CreateDeckSchema.parse(req.body)
-		await pool.query('INSERT INTO decks(name) VALUES($1)', [name])
+		const deck = new Deck()
+		await deck.create(req.body.name)
 		res.status(201).json({ message: SUCCESS_MESSAGES.DECK_CREATION_SUCCESS })
 	} catch (error) {
 		res.status(400).json({ message: ERROR_MESSAGES.DECK_CREATION_FAILED })
@@ -24,9 +23,13 @@ export const getDecks = async (
 	next: NextFunction
 ) => {
 	try {
-		const { rows } = await pool.query('SELECT * FROM decks')
-		res.json(rows).status(200)
+		const deck = new Deck()
+		const { rows } = await deck.findAll()
+		res
+			.json({ message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS, rows })
+			.status(200)
 	} catch (error) {
+		res.status(404).json({ message: ERROR_MESSAGES.DECK_NOT_FOUND })
 		next(error)
 	}
 }

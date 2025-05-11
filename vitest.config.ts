@@ -9,6 +9,7 @@ export default defineConfig({
 			provider: 'istanbul',
 			reporter: ['text', 'json', 'html'],
 			exclude: ['node_modules', 'dist', '**/*.model.ts', 'src/api/routes.ts']
-		}
+		},
+		passWithNoTests: true
 	}
 })

@@ -38,7 +38,8 @@
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:w": "vitest --watch",
-		"test:ui": "vitest --ui"
+		"test:ui": "vitest --ui",
+		"test:r": "vitest related --run"
 	},
 	"imports": {
 		"#src/*": "./src/*",
