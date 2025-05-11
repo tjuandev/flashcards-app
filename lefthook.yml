@@ -15,4 +15,4 @@ pre-commit:
     typecheck:
       run: yarn typecheck
     test:
-      run: yarn vitest related '{staged_files}' --run
+      run: yarn vitest related {staged_files} --run --silent
