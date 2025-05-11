@@ -6,7 +6,7 @@ describe('Route: /deck', () => {
 		const response = await request.get('/deck')
 		expect(response.status).toBe(200)
 		expect(response.body).toEqual({
-			message: 'ss',
+			message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS,
 			rows: expect.any(Array)
 		})
 	})
