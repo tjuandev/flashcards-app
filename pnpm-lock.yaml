@@ -9,35 +9,35 @@ importers:
   .:
     dependencies:
       '@types/pg':
-        specifier: ^8.15.1
+        specifier: ^8.15.6
         version: 8.15.6
       dotenv:
-        specifier: ^16.5.0
+        specifier: ^16.6.1
         version: 16.6.1
       express:
         specifier: ^5.1.0
         version: 5.1.0
       pg:
-        specifier: ^8.15.6
+        specifier: ^8.16.3
         version: 8.16.3
       zod:
-        specifier: ^3.24.3
+        specifier: ^3.25.76
         version: 3.25.76
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
         version: 1.9.4
       '@commitlint/cli':
-        specifier: ^19.8.0
+        specifier: ^19.8.1
         version: 19.8.1(@types/node@22.19.1)(typescript@5.9.3)
       '@commitlint/config-conventional':
-        specifier: ^19.8.0
+        specifier: ^19.8.1
         version: 19.8.1
       '@types/express':
-        specifier: ^5.0.1
+        specifier: ^5.0.5
         version: 5.0.5
       '@types/node':
-        specifier: ^22.15.3
+        specifier: ^22.19.1
         version: 22.19.1
       '@types/supertest':
         specifier: ^6.0.3
@@ -46,25 +46,25 @@ importers:
         specifier: 3.1.2
         version: 3.1.2(vitest@3.2.4)
       '@vitest/ui':
-        specifier: ^3.1.2
+        specifier: ^3.2.4
         version: 3.2.4(vitest@3.2.4)
       lefthook:
-        specifier: ^1.11.12
+        specifier: ^1.13.6
         version: 1.13.6
       nodemon:
-        specifier: ^3.1.10
+        specifier: ^3.1.11
         version: 3.1.11
       supertest:
-        specifier: ^7.1.0
+        specifier: ^7.1.4
         version: 7.1.4
       tsx:
-        specifier: ^4.19.4
+        specifier: ^4.20.6
         version: 4.20.6
       typescript:
-        specifier: ^5.8.3
+        specifier: ^5.9.3
         version: 5.9.3
       vitest:
-        specifier: ^3.1.2
+        specifier: ^3.2.4
         version: 3.2.4(@types/node@22.19.1)(@vitest/ui@3.2.4)(jiti@2.6.1)(tsx@4.20.6)
 
 packages:
