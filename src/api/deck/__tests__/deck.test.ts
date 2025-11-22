@@ -1,17 +1,15 @@
 import request from '#testHelpers/request.ts'
 import { SUCCESS_MESSAGES } from '../deck.constants.ts'
-import { Deck } from '../deck.model.ts'
+import * as deckModel from '../deck.model.ts'
 
-const DECKS_LIST = [
+const DECKS_LIST = vi.hoisted(() => [
 	{ id: 1, name: 'Test Deck' },
 	{ id: 2, name: 'Test Deck 2' }
-]
+])
 
 vi.mock('../deck.model.ts', () => ({
-	Deck: vi.fn().mockImplementation(() => ({
-		create: vi.fn().mockResolvedValue({ rows: DECKS_LIST[1] }),
-		findAll: vi.fn().mockResolvedValue({ rows: DECKS_LIST })
-	}))
+	createDeck: vi.fn().mockResolvedValue({ rows: DECKS_LIST[1] }),
+	findAllDecks: vi.fn().mockResolvedValue({ rows: DECKS_LIST })
 }))
 
 describe('Route: /deck', () => {
@@ -26,7 +24,7 @@ describe('Route: /deck', () => {
 			message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS,
 			data: DECKS_LIST
 		})
-		expect(Deck).toHaveBeenCalled()
+		expect(deckModel.findAllDecks).toHaveBeenCalled()
 	})
 
 	it('should create a deck', async () => {
@@ -38,6 +36,6 @@ describe('Route: /deck', () => {
 			message: SUCCESS_MESSAGES.DECK_CREATION_SUCCESS,
 			data: DECKS_LIST[1]
 		})
-		expect(Deck).toHaveBeenCalled()
+		expect(deckModel.createDeck).toHaveBeenCalledWith(DECKS_LIST[1].name)
 	})
 })

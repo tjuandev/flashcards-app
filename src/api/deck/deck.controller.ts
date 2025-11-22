@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express'
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './deck.constants.ts'
-import { Deck } from './deck.model.ts'
+import { createDeck as createDeckModel, findAllDecks } from './deck.model.ts'
 
 export const createDeck = async (
 	req: Request,
@@ -8,15 +8,15 @@ export const createDeck = async (
 	next: NextFunction
 ) => {
 	try {
-		const deck = new Deck()
-
-		const { rows } = await deck.create(req.body.name)
+		const { rows } = await createDeckModel(req.body.name)
 
 		res
 			.status(201)
 			.json({ message: SUCCESS_MESSAGES.DECK_CREATION_SUCCESS, data: rows })
 	} catch (error) {
-		res.status(400).json({ message: ERROR_MESSAGES.DECK_CREATION_FAILED })
+		res.status(400).json({
+			message: ERROR_MESSAGES.DECK_CREATION_FAILED
+		})
 		next(error)
 	}
 }
@@ -27,8 +27,7 @@ export const getDecks = async (
 	next: NextFunction
 ) => {
 	try {
-		const deck = new Deck()
-		const { rows } = await deck.findAll()
+		const { rows } = await findAllDecks()
 		res
 			.json({ message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS, data: rows })
 			.status(200)
