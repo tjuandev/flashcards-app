@@ -5,6 +5,7 @@
 	"main": "src/app.ts",
 	"author": "tjuandev",
 	"license": "MIT",
+	"packageManager": "pnpm@10.23.0",
 	"dependencies": {
 		"@types/pg": "^8.15.1",
 		"dotenv": "^16.5.0",
