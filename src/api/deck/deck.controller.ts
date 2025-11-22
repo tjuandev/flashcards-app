@@ -1,12 +1,8 @@
-import type { NextFunction, Request, Response } from 'express'
+import type { RequestHandler } from 'express'
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './deck.constants.ts'
 import { createDeck as createDeckModel, findAllDecks } from './deck.model.ts'
 
-export const createDeck = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+export const createDeck: RequestHandler = async (req, res, next) => {
 	try {
 		const { rows } = await createDeckModel(req.body.name)
 
@@ -21,17 +17,14 @@ export const createDeck = async (
 	}
 }
 
-export const getDecks = async (
-	_req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+export const getDecks: RequestHandler = async (_req, res, next) => {
 	try {
 		const { rows } = await findAllDecks()
 		res
 			.json({ message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS, data: rows })
 			.status(200)
 	} catch (error) {
+		console.error(error)
 		res.status(404).json({ message: ERROR_MESSAGES.DECK_NOT_FOUND })
 		next(error)
 	}
