@@ -4,9 +4,15 @@ import { CreateDeckSchema, type DeckSchema } from './deck.validator.ts'
 
 type DeckType = z.infer<typeof DeckSchema>
 
+// TODO: Remove this once we have a authentication feature
+const MOCKED_USER_ID = '0e7725d1-24d5-4241-9ff1-38b03d02e20e'
+
 export async function createDeck(name: DeckType['name']) {
 	CreateDeckSchema.parse({ name })
-	return await pool.query('INSERT INTO decks(name) VALUES($1)', [name])
+	return await pool.query('INSERT INTO decks(name, userId) VALUES($1)', [
+		name,
+		MOCKED_USER_ID
+	])
 }
 
 export async function findAllDecks() {
