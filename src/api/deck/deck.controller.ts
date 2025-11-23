@@ -1,6 +1,9 @@
 import type { RequestHandler } from 'express'
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './deck.constants.ts'
-import { createDeck as createDeckModel, findAllDecks } from './deck.model.ts'
+import {
+	createDeck as createDeckModel,
+	findAllDecks
+} from './deck.repository.ts'
 
 export const createDeck: RequestHandler = async (req, res, next) => {
 	try {

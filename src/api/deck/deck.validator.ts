@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export type Deck = z.infer<typeof DeckSchema>
+
 export const DeckSchema = z.object({
 	id: z.number(),
 	user_id: z.string().uuid(),
