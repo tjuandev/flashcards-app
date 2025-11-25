@@ -1,5 +1,4 @@
 import request from '#testHelpers/request.ts'
-import { SUCCESS_MESSAGES } from '../card.constants.ts'
 import * as cardModel from '../card.repository.ts'
 
 const CARDS_LIST = vi.hoisted(() => [
@@ -18,39 +17,41 @@ const CARDS_LIST = vi.hoisted(() => [
 ])
 
 vi.mock('../card.repository.ts', () => ({
-	createCard: vi.fn().mockResolvedValue({ rows: [CARDS_LIST[1]] }),
-	findAllCards: vi.fn().mockResolvedValue({ rows: CARDS_LIST })
+	createCardByDeckId: vi.fn().mockResolvedValue({ rows: [CARDS_LIST[1]] }),
+	findCardsByDeckId: vi.fn().mockResolvedValue({ rows: CARDS_LIST })
 }))
 
-describe('Route: /card', () => {
+const DECK_ID = 'b3dd501d-19dc-4115-806a-86388e5ea3c4'
+
+describe('Route: /cards', () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 	})
 
 	it('should return a list of cards', async () => {
-		const response = await request.get('/card')
+		const response = await request.get(`/cards/${DECK_ID}`)
 		expect(response.status).toBe(200)
 		expect(response.body).toEqual({
-			message: SUCCESS_MESSAGES.CARDS_LISTED,
 			data: CARDS_LIST
 		})
-		expect(cardModel.findAllCards).toHaveBeenCalled()
+		expect(cardModel.findCardsByDeckId).toHaveBeenCalledWith(DECK_ID)
 	})
 
 	it('should create a card', async () => {
 		const newCard = {
-			deck_id: 'b3dd501d-19dc-4115-806a-86388e5ea3c4',
 			front: 'Front 2',
 			back: 'Back 2'
 		}
-		const response = await request.post('/card').send(newCard)
+		const response = await request.post(`/cards/${DECK_ID}`).send(newCard)
 		expect(response.status).toBe(201)
 		expect(response.body).toEqual({
-			message: SUCCESS_MESSAGES.CARD_CREATION,
 			data: [CARDS_LIST[1]]
 		})
-		expect(cardModel.createCard).toHaveBeenCalledWith(
-			expect.objectContaining(newCard)
+		expect(cardModel.createCardByDeckId).toHaveBeenCalledWith(
+			expect.objectContaining({
+				...newCard,
+				deck_id: DECK_ID
+			})
 		)
 	})
 })

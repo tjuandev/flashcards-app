@@ -12,13 +12,13 @@ vi.mock('../deck.repository.ts', () => ({
 	findAllDecks: vi.fn().mockResolvedValue({ rows: DECKS_LIST })
 }))
 
-describe('Route: /deck', () => {
+describe('Route: /decks', () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 	})
 
 	it('should return a list of decks', async () => {
-		const response = await request.get('/deck')
+		const response = await request.get('/decks')
 		expect(response.status).toBe(200)
 		expect(response.body).toEqual({
 			message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS,
@@ -29,7 +29,7 @@ describe('Route: /deck', () => {
 
 	it('should create a deck', async () => {
 		const response = await request
-			.post('/deck')
+			.post('/decks')
 			.send({ name: DECKS_LIST[1].name })
 		expect(response.status).toBe(201)
 		expect(response.body).toEqual({
