@@ -1,6 +1,6 @@
 import { pool } from '#src/config/db.ts'
 import type { CardModel } from './card.types.ts'
-import { CreateCardSchema } from './card.validator.ts'
+import { CreateCardSchema, DeleteCardSchema } from './card.validator.ts'
 
 export async function createCardByDeckId(card: CardModel) {
 	CreateCardSchema.parse(card)
@@ -12,4 +12,9 @@ export async function createCardByDeckId(card: CardModel) {
 
 export async function findCardsByDeckId(deckId: string) {
 	return await pool.query('SELECT * FROM cards WHERE deck_id = $1', [deckId])
+}
+
+export async function deleteCardById(id: string) {
+	DeleteCardSchema.parse(id)
+	return await pool.query('DELETE FROM cards WHERE id = $1', [id])
 }

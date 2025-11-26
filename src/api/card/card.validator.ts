@@ -8,3 +8,4 @@ export const CardSchema = z.object({
 })
 
 export const CreateCardSchema = CardSchema.omit({ id: true })
+export const DeleteCardSchema = CardSchema.pick({ id: true }).required()

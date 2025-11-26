@@ -1,6 +1,10 @@
 import type { RequestHandler } from 'express'
-import { ERROR_MESSAGES } from './card.constants.ts'
-import { createCardByDeckId, findCardsByDeckId } from './card.repository.ts'
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './card.constants.ts'
+import {
+	createCardByDeckId,
+	deleteCardById,
+	findCardsByDeckId
+} from './card.repository.ts'
 
 export const handleCreateCardByDeckId: RequestHandler = async (
 	req,
@@ -30,6 +34,17 @@ export const handleGetCardsByDeckId: RequestHandler = async (
 	} catch (error) {
 		console.error(error)
 		res.status(404).json({ message: ERROR_MESSAGES.CARD_NOT_FOUND })
+		next(error)
+	}
+}
+
+export const handleDeleteCard: RequestHandler = async (req, res, next) => {
+	try {
+		await deleteCardById(req.params.cardId)
+		res.json({ message: SUCCESS_MESSAGES.CARD_DELETION_SUCCESS }).status(200)
+	} catch (error) {
+		console.error(error)
+		res.status(400).json({ message: ERROR_MESSAGES.CARD_DELETION })
 		next(error)
 	}
 }
