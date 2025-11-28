@@ -7,7 +7,7 @@ export const CardSchema = z.object({
 	back: z.string()
 })
 
-export const CreateCardSchema = CardSchema.omit({ id: true })
+export const CreateCardSchema = CardSchema.omit({ id: true, deck_id: true })
 export const DeleteCardSchema = CardSchema.pick({ id: true }).required()
 export const UpdateCardSchema = CardSchema.omit({ deck_id: true }).extend({
 	front: z.string().optional(),

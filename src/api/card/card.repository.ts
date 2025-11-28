@@ -1,31 +1,30 @@
 import { pool } from '#src/config/db.ts'
-import type { CardModel, UpdateCardBody } from './card.types.ts'
-import {
-	CreateCardSchema,
-	DeleteCardSchema,
-	UpdateCardSchema
-} from './card.validator.ts'
+import type {
+	CardIdParam,
+	CreateCardBody,
+	DeckIdParam,
+	UpdateCardBody
+} from './card.types.ts'
 
-export async function createCardByDeckId(card: CardModel) {
-	CreateCardSchema.parse(card)
+export async function createCardByDeckId(
+	deckId: DeckIdParam['deckId'],
+	card: CreateCardBody
+) {
 	return await pool.query(
 		'INSERT INTO cards(front, back, deck_id) VALUES($1, $2, $3) RETURNING *',
-		[card.front, card.back, card.deck_id]
+		[card.front, card.back, deckId]
 	)
 }
 
-export async function findCardsByDeckId(deckId: string) {
+export async function findCardsByDeckId(deckId: DeckIdParam['deckId']) {
 	return await pool.query('SELECT * FROM cards WHERE deck_id = $1', [deckId])
 }
 
-export async function deleteCardById(id: string) {
-	DeleteCardSchema.parse(id)
+export async function deleteCardById(id: CardIdParam['id']) {
 	return await pool.query('DELETE FROM cards WHERE id = $1', [id])
 }
 
 export async function updateCardById(card: UpdateCardBody) {
-	UpdateCardSchema.parse(card)
-	console.log(card)
 	const { back = null, front = null, id } = card || {}
 	return await pool.query(
 		`

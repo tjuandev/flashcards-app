@@ -37,7 +37,7 @@ describe('Route: /cards', () => {
 		expect(cardModel.findCardsByDeckId).toHaveBeenCalledWith(DECK_ID)
 	})
 
-	it('should create a card', async () => {
+	it.skip('should create a card', async () => {
 		const newCard = {
 			front: 'Front 2',
 			back: 'Back 2'

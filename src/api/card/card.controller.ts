@@ -6,47 +6,63 @@ import {
 	findCardsByDeckId,
 	updateCardById
 } from './card.repository.ts'
-import type { UpdateCardBody } from './card.types.ts'
+import type {
+	CardIdParam,
+	CreateCardBody,
+	DeckIdParam,
+	UpdateCardBody
+} from './card.types.ts'
+import {
+	CreateCardSchema,
+	DeleteCardSchema,
+	UpdateCardSchema
+} from './card.validator.ts'
 
-export const handleCreateCardByDeckId: RequestHandler = async (
-	req,
-	res,
-	next
-) => {
+export const handleCreateCardByDeckId: RequestHandler<
+	DeckIdParam,
+	unknown,
+	CreateCardBody
+> = async (req, res, next) => {
 	try {
-		const { rows } = await createCardByDeckId({
-			...req.body,
-			deck_id: req.params.deckId
-		})
+		const { deckId } = req.params
+		const card = CreateCardSchema.parse(req.body)
+		const { rows } = await createCardByDeckId(deckId, card)
+
 		return res.status(201).json({ data: rows })
 	} catch (error) {
 		next(error)
-		res.status(400).json({ message: ERROR_MESSAGES.CARD_CREATION })
 	}
 }
 
-export const handleGetCardsByDeckId: RequestHandler = async (
+export const handleGetCardsByDeckId: RequestHandler<DeckIdParam> = async (
 	req,
 	res,
 	next
 ) => {
 	try {
 		const { rows } = await findCardsByDeckId(req.params.deckId)
-		res.json({ data: rows }).status(200)
+		res.status(200).json({ data: rows })
 	} catch (error) {
-		console.error(error)
-		res.status(404).json({ message: ERROR_MESSAGES.CARD_NOT_FOUND })
 		next(error)
 	}
 }
 
-export const handleDeleteCard: RequestHandler = async (req, res, next) => {
+export const handleDeleteCard: RequestHandler<CardIdParam> = async (
+	req,
+	res,
+	next
+) => {
+	const { id } = req.params
+
+	if (!id) {
+		return res.status(400).json({ message: ERROR_MESSAGES.CARD_ID_REQUIRED })
+	}
+
 	try {
-		await deleteCardById(req.params.cardId)
-		res.json({ message: SUCCESS_MESSAGES.CARD_DELETION_SUCCESS }).status(200)
+		DeleteCardSchema.parse({ id })
+		await deleteCardById(id)
+		res.status(200).json({ message: SUCCESS_MESSAGES.CARD_DELETION_SUCCESS })
 	} catch (error) {
-		console.error(error)
-		res.status(400).json({ message: ERROR_MESSAGES.CARD_DELETION })
 		next(error)
 	}
 }
@@ -62,19 +78,18 @@ export const handleUpdateCard: RequestHandler<
 	}
 
 	try {
-		const { rows } = await updateCardById({
+		const card = UpdateCardSchema.parse({
 			...req.body,
 			id
 		})
+		const { rows } = await updateCardById(card)
 
 		if (rows.length === 0) {
 			return res.status(404).json({ message: ERROR_MESSAGES.CARD_NOT_FOUND })
 		}
 
-		res.json({ data: rows }).status(200)
+		res.status(200).json({ data: rows })
 	} catch (error) {
-		console.error(error)
-		res.status(400).json({ message: ERROR_MESSAGES.CARD_UPDATE_FAILED })
 		next(error)
 	}
 }
