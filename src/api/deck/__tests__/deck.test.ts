@@ -1,4 +1,4 @@
-import request from '#testHelpers/request.ts'
+import request from '#src/helpers/test/request.ts'
 import { SUCCESS_MESSAGES } from '../deck.constants.ts'
 import * as deckModel from '../deck.repository.ts'
 

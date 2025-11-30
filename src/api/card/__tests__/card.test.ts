@@ -1,4 +1,4 @@
-import request from '#testHelpers/request.ts'
+import request from '#src/helpers/test/request.ts'
 import * as cardModel from '../card.repository.ts'
 
 const CARDS_LIST = vi.hoisted(() => [
