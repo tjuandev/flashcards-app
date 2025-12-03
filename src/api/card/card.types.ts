@@ -5,10 +5,10 @@ import type {
 	UpdateCardSchema
 } from './card.validator.ts'
 
-export type CardModel = z.infer<typeof CardSchema>
+export type Card = z.infer<typeof CardSchema>
 
-export type DeckIdParam = { deckId: Pick<CardModel, 'deck_id'> }
-export type CardIdParam = { id: Pick<CardModel, 'id'> }
+export type DeckIdParam = { deckId: string }
+export type CardIdParam = { id: string }
 
 export type CreateCardBody = z.infer<typeof CreateCardSchema>
 export type UpdateCardBody = z.infer<typeof UpdateCardSchema>

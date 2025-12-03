@@ -68,7 +68,7 @@ export const handleDeleteCard: RequestHandler<CardIdParam> = async (
 }
 
 export const handleUpdateCard: RequestHandler<
-	{ id: string },
+	CardIdParam,
 	unknown,
 	UpdateCardBody
 > = async (req, res, next) => {
