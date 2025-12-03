@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { createDeck, getDecks } from './deck.controller.ts'
+import { handleCreateDeck, handleGetDecks } from './deck.controller.ts'
 
 const router = Router()
 
-router.get('/', getDecks)
-router.post('/', createDeck)
+router.get('/', handleGetDecks)
+router.post('/', handleCreateDeck)
 
 export default router

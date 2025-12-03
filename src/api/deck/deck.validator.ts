@@ -1,6 +1,4 @@
-import { z } from 'zod'
-
-export type Deck = z.infer<typeof DeckSchema>
+import z from 'zod'
 
 export const DeckSchema = z.object({
 	id: z.number(),

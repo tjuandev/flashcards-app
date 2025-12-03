@@ -4,12 +4,17 @@ import {
 	createDeck as createDeckModel,
 	findAllDecks
 } from './deck.repository.ts'
+import type { CreateDeckBody } from './deck.types.ts'
 import { CreateDeckSchema } from './deck.validator.ts'
 
-export const createDeck: RequestHandler = async (req, res, next) => {
+export const handleCreateDeck: RequestHandler<
+	unknown,
+	unknown,
+	CreateDeckBody
+> = async (req, res, next) => {
 	try {
-		const validatedData = CreateDeckSchema.parse(req.body)
-		const { rows } = await createDeckModel(validatedData.name)
+		const deck = CreateDeckSchema.parse(req.body)
+		const { rows } = await createDeckModel(deck.name)
 
 		res
 			.status(201)
@@ -19,7 +24,7 @@ export const createDeck: RequestHandler = async (req, res, next) => {
 	}
 }
 
-export const getDecks: RequestHandler = async (_req, res, next) => {
+export const handleGetDecks: RequestHandler = async (_req, res, next) => {
 	try {
 		const { rows } = await findAllDecks()
 		res
