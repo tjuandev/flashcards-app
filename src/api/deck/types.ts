@@ -5,4 +5,6 @@ export type Deck = z.infer<typeof DeckSchema>
 
 export type DeckIdParam = { id: string }
 
-export type CreateDeckBody = z.infer<typeof CreateDeckSchema>
+export namespace CreateDeck {
+	export type Body = z.infer<typeof CreateDeckSchema>
+}

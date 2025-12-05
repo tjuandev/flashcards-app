@@ -1,13 +1,14 @@
 import type { RequestHandler } from 'express'
+import type { DefaultResponse } from '#src/types/api/response.ts'
 import { SUCCESS_MESSAGES } from './constants.ts'
 import { createDeck as createDeckModel, findAllDecks } from './repository.ts'
-import type { CreateDeckBody } from './types.ts'
+import type { CreateDeck } from './types.ts'
 import { CreateDeckSchema } from './validator.ts'
 
 export const handleCreateDeck: RequestHandler<
 	unknown,
-	unknown,
-	CreateDeckBody
+	DefaultResponse,
+	CreateDeck.Body
 > = async (req, res, next) => {
 	try {
 		const deck = CreateDeckSchema.parse(req.body)
@@ -21,7 +22,11 @@ export const handleCreateDeck: RequestHandler<
 	}
 }
 
-export const handleGetDecks: RequestHandler = async (_req, res, next) => {
+export const handleGetDecks: RequestHandler<unknown, DefaultResponse> = async (
+	_req,
+	res,
+	next
+) => {
 	try {
 		const { rows } = await findAllDecks()
 		res
