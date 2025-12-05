@@ -1,4 +1,5 @@
 import type { RequestHandler } from 'express'
+import type { DefaultResponse } from '#src/types/api/response.ts'
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './constants.ts'
 import {
 	createCardByDeckId,
@@ -8,9 +9,9 @@ import {
 } from './repository.ts'
 import type {
 	CardIdParam,
-	CreateCardBody,
+	CreateCard,
 	DeckIdParam,
-	UpdateCardBody
+	UpdateCard
 } from './types.ts'
 import {
 	CreateCardSchema,
@@ -20,8 +21,8 @@ import {
 
 export const handleCreateCardByDeckId: RequestHandler<
 	DeckIdParam,
-	unknown,
-	CreateCardBody
+	DefaultResponse,
+	CreateCard.Body
 > = async (req, res, next) => {
 	try {
 		const { deckId } = req.params
@@ -47,11 +48,10 @@ export const handleGetCardsByDeckId: RequestHandler<DeckIdParam> = async (
 	}
 }
 
-export const handleDeleteCard: RequestHandler<CardIdParam> = async (
-	req,
-	res,
-	next
-) => {
+export const handleDeleteCard: RequestHandler<
+	CardIdParam,
+	DefaultResponse
+> = async (req, res, next) => {
 	const { id } = req.params
 
 	if (!id) {
@@ -69,8 +69,8 @@ export const handleDeleteCard: RequestHandler<CardIdParam> = async (
 
 export const handleUpdateCard: RequestHandler<
 	CardIdParam,
-	unknown,
-	UpdateCardBody
+	DefaultResponse,
+	UpdateCard.Body
 > = async (req, res, next) => {
 	const { id } = req.params
 	if (!id) {
