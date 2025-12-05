@@ -4,7 +4,7 @@ import type {
 	CreateCardBody,
 	DeckIdParam,
 	UpdateCardBody
-} from './card.types.ts'
+} from './types.ts'
 
 export async function createCardByDeckId(
 	deckId: DeckIdParam['deckId'],

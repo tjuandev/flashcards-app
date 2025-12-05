@@ -1,11 +1,8 @@
 import type { RequestHandler } from 'express'
-import { SUCCESS_MESSAGES } from './deck.constants.ts'
-import {
-	createDeck as createDeckModel,
-	findAllDecks
-} from './deck.repository.ts'
-import type { CreateDeckBody } from './deck.types.ts'
-import { CreateDeckSchema } from './deck.validator.ts'
+import { SUCCESS_MESSAGES } from './constants.ts'
+import { createDeck as createDeckModel, findAllDecks } from './repository.ts'
+import type { CreateDeckBody } from './types.ts'
+import { CreateDeckSchema } from './validator.ts'
 
 export const handleCreateDeck: RequestHandler<
 	unknown,

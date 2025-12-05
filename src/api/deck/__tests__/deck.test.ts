@@ -1,13 +1,13 @@
 import request from '#src/helpers/test/request.ts'
-import { SUCCESS_MESSAGES } from '../deck.constants.ts'
-import * as deckModel from '../deck.repository.ts'
+import { SUCCESS_MESSAGES } from '../constants.ts'
+import * as deckModel from '../repository.ts'
 
 const DECKS_LIST = vi.hoisted(() => [
 	{ id: 1, name: 'Test Deck' },
 	{ id: 2, name: 'Test Deck 2' }
 ])
 
-vi.mock('../deck.repository.ts', () => ({
+vi.mock('../repository.ts', () => ({
 	createDeck: vi.fn().mockResolvedValue({ rows: DECKS_LIST[1] }),
 	findAllDecks: vi.fn().mockResolvedValue({ rows: DECKS_LIST })
 }))

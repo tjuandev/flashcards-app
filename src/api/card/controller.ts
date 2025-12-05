@@ -1,22 +1,22 @@
 import type { RequestHandler } from 'express'
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './card.constants.ts'
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from './constants.ts'
 import {
 	createCardByDeckId,
 	deleteCardById,
 	findCardsByDeckId,
 	updateCardById
-} from './card.repository.ts'
+} from './repository.ts'
 import type {
 	CardIdParam,
 	CreateCardBody,
 	DeckIdParam,
 	UpdateCardBody
-} from './card.types.ts'
+} from './types.ts'
 import {
 	CreateCardSchema,
 	DeleteCardSchema,
 	UpdateCardSchema
-} from './card.validator.ts'
+} from './validator.ts'
 
 export const handleCreateCardByDeckId: RequestHandler<
 	DeckIdParam,

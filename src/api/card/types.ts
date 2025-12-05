@@ -3,7 +3,7 @@ import type {
 	CardSchema,
 	CreateCardSchema,
 	UpdateCardSchema
-} from './card.validator.ts'
+} from './validator.ts'
 
 export type Card = z.infer<typeof CardSchema>
 

@@ -4,7 +4,7 @@ import {
 	handleDeleteCard,
 	handleGetCardsByDeckId,
 	handleUpdateCard
-} from './card.controller.ts'
+} from './controller.ts'
 
 const router = Router()
 

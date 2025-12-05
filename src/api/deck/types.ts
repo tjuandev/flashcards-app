@@ -1,5 +1,5 @@
 import type z from 'zod'
-import type { CreateDeckSchema, DeckSchema } from './deck.validator.ts'
+import type { CreateDeckSchema, DeckSchema } from './validator.ts'
 
 export type Deck = z.infer<typeof DeckSchema>
 

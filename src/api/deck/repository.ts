@@ -1,6 +1,6 @@
 import { pool } from '#src/config/db.ts'
 
-// TODO: Remove this once we have a authentication feature
+// TODO: Remove this once we have an authentication feature
 const MOCKED_USER_ID = '0e7725d1-24d5-4241-9ff1-38b03d02e20e'
 
 export async function createDeck(name: string) {

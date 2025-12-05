@@ -1,5 +1,5 @@
 import request from '#src/helpers/test/request.ts'
-import * as cardModel from '../card.repository.ts'
+import * as cardModel from '../repository.ts'
 
 const CARDS_LIST = vi.hoisted(() => [
 	{
@@ -16,7 +16,7 @@ const CARDS_LIST = vi.hoisted(() => [
 	}
 ])
 
-vi.mock('../card.repository.ts', () => ({
+vi.mock('../repository.ts', () => ({
 	createCardByDeckId: vi.fn().mockResolvedValue({ rows: [CARDS_LIST[1]] }),
 	findCardsByDeckId: vi.fn().mockResolvedValue({ rows: CARDS_LIST })
 }))
