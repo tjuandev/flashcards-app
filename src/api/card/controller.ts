@@ -13,21 +13,16 @@ import type {
 	DeckIdParam,
 	UpdateCard
 } from './types.ts'
-import {
-	CreateCardSchema,
-	DeleteCardSchema,
-	UpdateCardSchema
-} from './validator.ts'
+import { CreateCardSchema, UpdateCardSchema } from './validator.ts'
 
 export const handleCreateCardByDeckId: RequestHandler<
-	DeckIdParam,
+	never,
 	DefaultResponse,
 	CreateCard.Body
 > = async (req, res, next) => {
 	try {
-		const { deckId } = req.params
 		const card = CreateCardSchema.parse(req.body)
-		const { rows } = await createCardByDeckId(deckId, card)
+		const { rows } = await createCardByDeckId(card)
 
 		return res.status(201).json({ data: rows })
 	} catch (error) {
@@ -35,13 +30,12 @@ export const handleCreateCardByDeckId: RequestHandler<
 	}
 }
 
-export const handleGetCardsByDeckId: RequestHandler<DeckIdParam> = async (
-	req,
-	res,
-	next
-) => {
+export const handleGetCardsByDeckId: RequestHandler<
+	DeckIdParam,
+	DefaultResponse
+> = async (req, res, next) => {
 	try {
-		const { rows } = await findCardsByDeckId(req.params.deckId)
+		const { rows } = await findCardsByDeckId(req.params.deck_id)
 		res.status(200).json({ data: rows })
 	} catch (error) {
 		next(error)
@@ -53,13 +47,7 @@ export const handleDeleteCard: RequestHandler<
 	DefaultResponse
 > = async (req, res, next) => {
 	const { id } = req.params
-
-	if (!id) {
-		return res.status(400).json({ message: ERROR_MESSAGES.CARD_ID_REQUIRED })
-	}
-
 	try {
-		DeleteCardSchema.parse({ id })
 		await deleteCardById(id)
 		res.status(200).json({ message: SUCCESS_MESSAGES.CARD_DELETION_SUCCESS })
 	} catch (error) {
@@ -73,9 +61,6 @@ export const handleUpdateCard: RequestHandler<
 	UpdateCard.Body
 > = async (req, res, next) => {
 	const { id } = req.params
-	if (!id) {
-		return res.status(400).json({ message: ERROR_MESSAGES.CARD_ID_REQUIRED })
-	}
 
 	try {
 		const card = UpdateCardSchema.parse({

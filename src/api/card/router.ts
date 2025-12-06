@@ -8,8 +8,8 @@ import {
 
 const router = Router()
 
-router.get('/:deckId', handleGetCardsByDeckId)
-router.post('/:deckId', handleCreateCardByDeckId)
+router.get('/:deck_id', handleGetCardsByDeckId)
+router.post('/', handleCreateCardByDeckId)
 router.delete('/:id', handleDeleteCard)
 router.put('/:id', handleUpdateCard)
 

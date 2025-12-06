@@ -7,8 +7,9 @@ import type {
 
 export type Card = z.infer<typeof CardSchema>
 
-export type DeckIdParam = { deckId: string }
 export type CardIdParam = { id: string }
+
+export type DeckIdParam = { deck_id: string }
 export namespace CreateCard {
 	export type Body = z.infer<typeof CreateCardSchema>
 }
