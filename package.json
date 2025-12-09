@@ -10,6 +10,7 @@
 		"@types/pg": "^8.15.6",
 		"dotenv": "^16.6.1",
 		"express": "^5.1.0",
+		"node-pg-migrate": "^8.0.3",
 		"pg": "^8.16.3",
 		"zod": "^3.25.76"
 	},
@@ -39,7 +40,11 @@
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:w": "vitest --watch",
-		"test:ui": "vitest --ui"
+		"test:ui": "vitest --ui",
+		"migrate:up": "node-pg-migrate up",
+		"migrate:down": "node-pg-migrate down",
+		"migrate:redo": "node-pg-migrate redo",
+		"migrate:create": "node-pg-migrate create"
 	},
 	"imports": {
 		"#src/*": "./src/*",
