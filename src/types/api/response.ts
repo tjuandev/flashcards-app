@@ -1,4 +1,4 @@
-export type DefaultResponse = {
+export type DefaultResponse<Data = unknown> = {
 	message?: string
-	data?: unknown
+	data?: Data
 }

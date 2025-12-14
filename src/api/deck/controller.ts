@@ -2,12 +2,12 @@ import type { RequestHandler } from 'express'
 import type { DefaultResponse } from '#src/types/api/response.ts'
 import { SUCCESS_MESSAGES } from './constants.ts'
 import { createDeck as createDeckModel, findAllDecks } from './repository.ts'
-import type { CreateDeck } from './types.ts'
+import type { CreateDeck, Deck } from './types.ts'
 import { CreateDeckSchema } from './validator.ts'
 
 export const handleCreateDeck: RequestHandler<
 	unknown,
-	DefaultResponse,
+	DefaultResponse<Deck[]>,
 	CreateDeck.Body
 > = async (req, res, next) => {
 	try {
