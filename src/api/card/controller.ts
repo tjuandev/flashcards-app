@@ -5,6 +5,7 @@ import {
 	createCardByDeckId,
 	deleteCardById,
 	findCardsByDeckId,
+	getReviewsCountByDeckId,
 	updateCardById
 } from './repository.ts'
 import type {
@@ -36,6 +37,18 @@ export const handleGetCardsByDeckId: RequestHandler<
 > = async (req, res, next) => {
 	try {
 		const { rows } = await findCardsByDeckId(req.params.deck_id)
+		res.status(200).json({ data: rows })
+	} catch (error) {
+		next(error)
+	}
+}
+
+export const handleGetReviewsCountByDeckId: RequestHandler<
+	DeckIdParam,
+	DefaultResponse
+> = async (req, res, next) => {
+	try {
+		const { rows } = await getReviewsCountByDeckId(req.params.deck_id)
 		res.status(200).json({ data: rows })
 	} catch (error) {
 		next(error)

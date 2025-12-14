@@ -37,3 +37,14 @@ export async function updateCardById(card: UpdateCard.Body) {
 		[front, back, id]
 	)
 }
+
+export async function getReviewsCountByDeckId(deck_id: DeckIdParam['deck_id']) {
+	return await pool.query<{ review_count: number }>(
+		`
+			SELECT COUNT(*) FROM cards 
+			WHERE last_review > CURRENT_DATE
+			AND deck_id = $1
+		`,
+		[deck_id]
+	)
+}
