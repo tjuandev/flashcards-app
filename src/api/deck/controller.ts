@@ -1,8 +1,12 @@
 import type { RequestHandler } from 'express'
 import type { DefaultResponse } from '#src/types/api/response.ts'
 import { SUCCESS_MESSAGES } from './constants.ts'
-import { createDeck as createDeckModel, findAllDecks } from './repository.ts'
-import type { CreateDeck, Deck } from './types.ts'
+import {
+	createDeck as createDeckModel,
+	findAllDecks,
+	getReviewsCount
+} from './repository.ts'
+import type { CreateDeck, Deck, DeckIdParam } from './types.ts'
 import { CreateDeckSchema } from './validator.ts'
 
 export const handleCreateDeck: RequestHandler<
@@ -32,6 +36,18 @@ export const handleGetDecks: RequestHandler<unknown, DefaultResponse> = async (
 		res
 			.status(200)
 			.json({ message: SUCCESS_MESSAGES.DECKS_LISTED_SUCCESS, data: rows })
+	} catch (error) {
+		next(error)
+	}
+}
+
+export const handleGetReviewsCount: RequestHandler<
+	DeckIdParam,
+	DefaultResponse
+> = async (req, res, next) => {
+	try {
+		const { rows } = await getReviewsCount(req.params.id)
+		res.status(200).json({ data: rows })
 	} catch (error) {
 		next(error)
 	}
