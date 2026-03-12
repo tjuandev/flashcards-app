@@ -3,6 +3,7 @@ import {
 	handleCreateCardByDeckId,
 	handleDeleteCard,
 	handleGetCardsByDeckId,
+	handleReviewCard,
 	handleUpdateCard
 } from './controller.ts'
 
@@ -12,5 +13,6 @@ router.get('/:deck_id', handleGetCardsByDeckId)
 router.post('/', handleCreateCardByDeckId)
 router.delete('/:id', handleDeleteCard)
 router.put('/:id', handleUpdateCard)
+router.post('/:id/review', handleReviewCard)
 
 export default router

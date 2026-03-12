@@ -18,7 +18,8 @@ const CARDS_LIST = vi.hoisted(() => [
 
 vi.mock('../repository.ts', () => ({
 	createCardByDeckId: vi.fn().mockResolvedValue({ rows: [CARDS_LIST[1]] }),
-	findCardsByDeckId: vi.fn().mockResolvedValue({ rows: CARDS_LIST })
+	findCardsByDeckId: vi.fn().mockResolvedValue({ rows: CARDS_LIST }),
+	reviewCardById: vi.fn().mockResolvedValue({ rows: [CARDS_LIST[0]] })
 }))
 
 const DECK_ID = 'b3dd501d-19dc-4115-806a-86388e5ea3c4'
@@ -35,6 +36,19 @@ describe('Route: /cards', () => {
 			data: CARDS_LIST
 		})
 		expect(cardModel.findCardsByDeckId).toHaveBeenCalledWith(DECK_ID)
+	})
+
+	it('should review a card', async () => {
+		const CARD_ID = CARDS_LIST[0].id
+		const response = await request
+			.post(`/cards/${CARD_ID}/review`)
+			.send({ weight: 3 })
+		expect(response.status).toBe(200)
+		expect(response.body).toEqual({
+			message: 'Card reviewed successfully',
+			data: [CARDS_LIST[0]]
+		})
+		expect(cardModel.reviewCardById).toHaveBeenCalledWith(String(CARD_ID), 3)
 	})
 
 	it.skip('should create a card', async () => {

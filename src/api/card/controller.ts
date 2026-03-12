@@ -5,15 +5,21 @@ import {
 	createCardByDeckId,
 	deleteCardById,
 	findCardsByDeckId,
+	reviewCardById,
 	updateCardById
 } from './repository.ts'
 import type {
 	CardIdParam,
 	CreateCard,
 	DeckIdParam,
+	ReviewCard,
 	UpdateCard
 } from './types.ts'
-import { CreateCardSchema, UpdateCardSchema } from './validator.ts'
+import {
+	CreateCardSchema,
+	ReviewCardSchema,
+	UpdateCardSchema
+} from './validator.ts'
 
 export const handleCreateCardByDeckId: RequestHandler<
 	never,
@@ -50,6 +56,27 @@ export const handleDeleteCard: RequestHandler<
 	try {
 		await deleteCardById(id)
 		res.status(200).json({ message: SUCCESS_MESSAGES.CARD_DELETION_SUCCESS })
+	} catch (error) {
+		next(error)
+	}
+}
+
+export const handleReviewCard: RequestHandler<
+	CardIdParam,
+	DefaultResponse,
+	ReviewCard.Body
+> = async (req, res, next) => {
+	try {
+		const { weight } = ReviewCardSchema.parse(req.body)
+		const { rows } = await reviewCardById(req.params.id, weight)
+
+		if (rows.length === 0) {
+			return res.status(404).json({ message: ERROR_MESSAGES.CARD_NOT_FOUND })
+		}
+
+		res
+			.status(200)
+			.json({ message: SUCCESS_MESSAGES.CARD_REVIEW_SUCCESS, data: rows })
 	} catch (error) {
 		next(error)
 	}

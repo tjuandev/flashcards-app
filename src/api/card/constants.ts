@@ -7,5 +7,6 @@ export const ERROR_MESSAGES = {
 }
 
 export const SUCCESS_MESSAGES = {
-	CARD_DELETION_SUCCESS: 'Card deleted successfully'
+	CARD_DELETION_SUCCESS: 'Card deleted successfully',
+	CARD_REVIEW_SUCCESS: 'Card reviewed successfully'
 }

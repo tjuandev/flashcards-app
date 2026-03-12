@@ -4,6 +4,7 @@ import type {
 	CardIdParam,
 	CreateCard,
 	DeckIdParam,
+	ReviewCard,
 	UpdateCard
 } from './types.ts'
 
@@ -22,6 +23,21 @@ export async function findCardsByDeckId(deck_id: DeckIdParam['deck_id']) {
 
 export async function deleteCardById(id: CardIdParam['id']) {
 	return await pool.query<never>('DELETE FROM cards WHERE id = $1', [id])
+}
+
+export async function reviewCardById(
+	id: CardIdParam['id'],
+	weight: ReviewCard.Body['weight']
+) {
+	return await pool.query<Card>(
+		`
+			UPDATE cards
+			SET last_review_timestamp = NOW(), last_review_weight = $1
+			WHERE id = $2
+			RETURNING *
+		`,
+		[weight, id]
+	)
 }
 
 export async function updateCardById(card: UpdateCard.Body) {

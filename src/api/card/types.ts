@@ -2,6 +2,7 @@ import type z from 'zod'
 import type {
 	CardSchema,
 	CreateCardSchema,
+	ReviewCardSchema,
 	UpdateCardSchema
 } from './validator.ts'
 
@@ -16,4 +17,8 @@ export namespace CreateCard {
 
 export namespace UpdateCard {
 	export type Body = z.infer<typeof UpdateCardSchema>
+}
+
+export namespace ReviewCard {
+	export type Body = z.infer<typeof ReviewCardSchema>
 }
