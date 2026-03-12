@@ -8,3 +8,10 @@ export type DeckIdParam = { id: string }
 export namespace CreateDeck {
 	export type Body = z.infer<typeof CreateDeckSchema>
 }
+
+export namespace GetReviewsCount {
+	export type Response = { review_count: number }
+	export type Body = {
+		limit?: number
+	}
+}

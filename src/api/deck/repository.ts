@@ -15,13 +15,16 @@ export async function findAllDecks() {
 	return await pool.query('SELECT * FROM decks')
 }
 
-export async function getReviewsCount(id: DeckIdParam['id']) {
+export async function getReviewsCount(id: DeckIdParam['id'], limit = 20) {
 	return await pool.query<{ review_count: number }>(
 		`
-			SELECT COUNT(*) FROM cards
-			WHERE last_review > CURRENT_DATE
-			AND deck_id = $1
+			SELECT COUNT(*) FROM (
+				SELECT 1 FROM cards
+				WHERE last_review > CURRENT_DATE
+				AND deck_id = $1
+				LIMIT $2
+			) AS limited_cards
 		`,
-		[id]
+		[id, limit]
 	)
 }

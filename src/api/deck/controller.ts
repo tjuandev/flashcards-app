@@ -6,7 +6,7 @@ import {
 	findAllDecks,
 	getReviewsCount
 } from './repository.ts'
-import type { CreateDeck, Deck, DeckIdParam } from './types.ts'
+import type { CreateDeck, Deck, DeckIdParam, GetReviewsCount } from './types.ts'
 import { CreateDeckSchema } from './validator.ts'
 
 export const handleCreateDeck: RequestHandler<
@@ -43,10 +43,11 @@ export const handleGetDecks: RequestHandler<unknown, DefaultResponse> = async (
 
 export const handleGetReviewsCount: RequestHandler<
 	DeckIdParam,
-	DefaultResponse
+	DefaultResponse,
+	GetReviewsCount.Body
 > = async (req, res, next) => {
 	try {
-		const { rows } = await getReviewsCount(req.params.id)
+		const { rows } = await getReviewsCount(req.params.id, req.body.limit)
 		res.status(200).json({ data: rows })
 	} catch (error) {
 		next(error)

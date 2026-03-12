@@ -9,6 +9,6 @@ const router = Router()
 
 router.get('/', handleGetDecks)
 router.post('/', handleCreateDeck)
-router.get('/:id/reviews-count', handleGetReviewsCount)
+router.post('/:id/reviews-count', handleGetReviewsCount)
 
 export default router
