@@ -103,6 +103,8 @@ export async function updateResourceById(data: UpdateResource.Body) {
 }
 ```
 
+ If a migration is needed, create a new migration file with the `/create-migration` skill.
+
 ### `controller.ts`
 Each handler is typed as `RequestHandler<Params, ResponseBody, RequestBody>` using `DefaultResponse` from `#src/types/api/response.ts`. All controller functions **must** be prefixed with `handle` (e.g. `handleCreateResource`, `handleGetResourceById`) to distinguish them from repository functions that share similar names. Parse request bodies with Zod schemas. Pass errors to `next(error)`. Return 404 when an update/find returns empty rows. Example:
 
